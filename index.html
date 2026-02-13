@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-aesthetic">
+    
     <div id="intro-screen" class="screen active">
-        <h1 class="cinematic-text">SHINOBI PROPOSAL ARC</h1>
-        <button class="shinobi-btn pulse" onclick="enterMap()">UNSEAL THE SCROLL</button>
+        <h1 class="cinematic-text">SHINOBI ARCHIVE</h1>
+        <p class="subtitle">SECURITY SEAL ACTIVE</p>
+        <div id="seal-container">
+            <div class="seal-lock" onclick="hitSeal(this)">封</div>
+            <div class="seal-lock" onclick="hitSeal(this)">印</div>
+            <div class="seal-lock" onclick="hitSeal(this)">解</div>
+        </div>
+        <p class="instruction">Tap the Seals to Break the Barrier!</p>
     </div>
 
     <div id="map-screen" class="screen">
-        <div class="map-header">MAP V1.0 - SHINOBI WORLD</div>
+        <div class="map-header">MISSION SELECT</div>
         <div class="map-grid" id="mapGrid"></div>
         <div class="inventory-bar">
             <div class="scroll-slot">SCROLLS: <span id="scroll-count">0</span>/6 📜</div>
@@ -22,23 +29,26 @@
 
     <div id="game-container" class="screen">
         <h2 id="game-title"></h2>
-        <canvas id="gameCanvas"></canvas>
+        <div id="game-area">
+            </div>
         <div id="ui">
             <p id="game-instruction"></p>
             <div id="power-bar"><div id="power-fill"></div></div>
         </div>
-        <button class="shinobi-btn back-btn" onclick="goBackToMap()">RETREAT</button>
+        <button class="shinobi-btn back-btn" onclick="enterMap()">RETREAT</button>
     </div>
 
     <div id="final-screen" class="screen">
         <div class="sakura-storm"></div>
         <div class="scroll-reveal">
-            <h1>MISSION COMPLETE!</h1>
+            <h1 class="glow-text">MISSION COMPLETE</h1>
             <p class="anime-paragraph">
-                By the power of the Six Paths, you have cleared every trial. Your resolve is unbreakable. 
-                In this world of shinobi, a comrade like you is rarer than a Forbidden Jutsu. You have conquered the darkness; now, let us walk towards the light together.
+                By the power of the Six Paths and the strength of your ninja way, you have cleared every trial. 
+                Your chakra is pure, and your resolve is unbreakable. In this world of shinobi, a connection 
+                like ours is rarer than a Forbidden Jutsu. You have conquered the darkness; now, let us walk 
+                towards the light together.
             </p>
-            <h2 class="glow-text">Will you be my Player 2?</h2>
+            <h2 class="final-question">Will you be my Player 2?</h2>
             <div class="btn-group">
                 <button id="yesBtn" class="shinobi-btn" onclick="celebrate()">YES</button>
                 <button id="noBtn" class="shinobi-btn">NO</button>
