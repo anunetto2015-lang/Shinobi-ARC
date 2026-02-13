@@ -1,40 +1,34 @@
-body {
-    margin: 0; background: #050505; color: white;
-    font-family: 'Courier New', Courier, monospace;
-    display: flex; justify-content: center; align-items: center;
-    height: 100vh; overflow: hidden; text-align: center;
+:root {
+    --shinobi-purple: #6e00ff;
+    --demon-red: #ff003c;
+    --map-pink: #ff7eb9;
 }
+
+body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #050505; color: white; font-family: 'Courier New', monospace; }
+
+.screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100vh; position: absolute; }
+.screen.active { display: flex; }
 
 .dark-aesthetic { background: radial-gradient(circle, #1a0033 0%, #050505 100%); }
 
-.map-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 15px; padding: 10px;
-}
-
+/* Map Grid Styles */
+.map-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 90%; max-width: 350px; }
 .grid-item {
-    border: 3px solid #ff003c; background: rgba(255, 0, 60, 0.1);
-    padding: 15px; cursor: pointer; transition: 0.3s;
+    border: 3px solid var(--map-pink); background: rgba(255, 126, 185, 0.1);
+    padding: 15px; cursor: pointer; text-align: center; transition: 0.3s;
 }
+.grid-item.locked { opacity: 0.2; filter: grayscale(1); cursor: not-allowed; }
+.grid-item span { font-size: 2.5rem; }
+.grid-label { font-size: 0.7rem; color: var(--map-pink); font-weight: bold; margin-top: 5px; }
 
-.grid-item.locked { opacity: 0.2; cursor: not-allowed; border-color: #444; }
+/* Game Elements */
+canvas { background: rgba(255,255,255,0.05); border: 2px solid var(--shinobi-purple); width: 300px; height: 350px; }
+#power-bar { width: 250px; height: 10px; border: 1px solid var(--shinobi-purple); margin: 10px 0; border-radius: 5px; }
+#power-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--shinobi-purple), var(--demon-red)); }
 
-canvas {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid #6e00ff;
-    max-width: 90vw;
-    max-height: 50vh;
-}
+.shinobi-btn { background: #000; color: #fff; border: 2px solid var(--shinobi-purple); padding: 12px 24px; cursor: pointer; font-weight: bold; }
+.glow-text { color: var(--demon-red); text-shadow: 0 0 10px var(--demon-red); }
 
-.scroll-reveal {
-    max-width: 85%; background: rgba(0,0,0,0.9);
-    padding: 20px; border: 2px solid #6e00ff;
-}
+/* Sakura Storm */
+.sakura-storm { position: fixed; width: 100%; height: 100%; pointer-events: none; background: url('https://www.transparenttextures.com/patterns/dust.png'); opacity: 0.3; }
 
-.shinobi-btn {
-    background: #000; color: #fff; border: 2px solid #6e00ff;
-    padding: 12px 24px; cursor: pointer;
-}
-
-#power-bar { width: 200px; height: 8px; border: 1px solid #6e00ff; margin: 10px auto; }
-#power-fill { height: 100%; width: 0%; background: #ff003c; transition: 0.2s; }
