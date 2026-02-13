@@ -7,29 +7,34 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-aesthetic">
-
-    <div id="intro-screen" class="active-screen">
+    <div id="intro-screen">
         <h1 class="cinematic-text">SHINOBI PROPOSAL ARC</h1>
+        <p class="subtitle">UNSEAL THE FINAL JUTSU</p>
         <button class="shinobi-btn" onclick="startGame()">UNSEAL THE SCROLL</button>
     </div>
 
     <div id="game-container" style="display: none;">
         <h2 id="game-title">Level 1: Chakra Charge</h2>
-        <canvas id="gameCanvas"></canvas>
+        <div id="stage">
+            <div id="player-sprite">🦊</div>
+            <div id="enemy-sprite">🌀</div>
+        </div>
         <div id="ui">
             <div id="power-bar"><div id="power-fill"></div></div>
+            <p class="instruction">Tap / Click to Fight!</p>
         </div>
     </div>
 
     <div id="final-screen" style="display: none;">
-        <h1 class="glow-text">Final Proposal Arc</h1>
-        <p>Will you be my Player 2?</p>
+        <div class="sakura-storm"></div>
+        <h1 class="glow-text">Will you be my Player 2?</h1>
         <div class="btn-group">
-            <button id="yesBtn" class="shinobi-btn">YES</button>
+            <button id="yesBtn" class="shinobi-btn" onclick="celebrate()">YES</button>
             <button id="noBtn" class="shinobi-btn">NO</button>
         </div>
     </div>
 
+    <audio id="bgm" loop></audio>
     <script src="script.js"></script>
 </body>
 </html>
