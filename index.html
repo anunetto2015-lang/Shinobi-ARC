@@ -2,40 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Shinobi Proposal Arc</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-aesthetic">
-    <div id="intro-screen">
+    <div id="intro-screen" class="screen active">
         <h1 class="cinematic-text">SHINOBI PROPOSAL ARC</h1>
-        <button class="shinobi-btn" onclick="enterMap()">UNSEAL THE SCROLL</button>
+        <button class="shinobi-btn pulse" onclick="enterMap()">UNSEAL THE SCROLL</button>
     </div>
 
-    <div id="map-screen" style="display: none;">
-        <h2 class="map-title">SELECT YOUR MISSION</h2>
+    <div id="map-screen" class="screen">
+        <div class="map-header">MAP V1.0 - SHINOBI WORLD</div>
         <div class="map-grid" id="mapGrid"></div>
-        <div class="inventory">
-            <p>Scrolls Collected: <span id="scrollCount">0</span>/6</p>
+        <div class="inventory-bar">
+            <div class="scroll-slot">SCROLLS: <span id="scroll-count">0</span>/6 📜</div>
         </div>
     </div>
 
-    <div id="game-container" style="display: none;">
+    <div id="game-container" class="screen">
         <h2 id="game-title"></h2>
         <canvas id="gameCanvas"></canvas>
         <div id="ui">
             <p id="game-instruction"></p>
             <div id="power-bar"><div id="power-fill"></div></div>
         </div>
+        <button class="shinobi-btn back-btn" onclick="goBackToMap()">RETREAT</button>
     </div>
 
-    <div id="final-screen" style="display: none;">
+    <div id="final-screen" class="screen">
         <div class="sakura-storm"></div>
         <div class="scroll-reveal">
             <h1>MISSION COMPLETE!</h1>
             <p class="anime-paragraph">
                 By the power of the Six Paths, you have cleared every trial. Your resolve is unbreakable. 
-                In this world of shinobi, a comrade like you is rarer than a Forbidden Jutsu.
+                In this world of shinobi, a comrade like you is rarer than a Forbidden Jutsu. You have conquered the darkness; now, let us walk towards the light together.
             </p>
             <h2 class="glow-text">Will you be my Player 2?</h2>
             <div class="btn-group">
