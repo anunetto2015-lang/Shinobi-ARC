@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-aesthetic">
+
     <div id="intro-screen" class="active-screen">
         <h1 class="cinematic-text">SHINOBI PROPOSAL ARC</h1>
-        <button onclick="startGame()">UNSEAL THE SCROLL</button>
+        <button class="shinobi-btn" onclick="startGame()">UNSEAL THE SCROLL</button>
     </div>
 
-    <div id="game-container" class="hidden">
+    <div id="game-container" style="display: none;">
         <h2 id="game-title">Level 1: Chakra Charge</h2>
         <canvas id="gameCanvas"></canvas>
         <div id="ui">
@@ -20,11 +21,13 @@
         </div>
     </div>
 
-    <div id="final-screen" class="hidden">
+    <div id="final-screen" style="display: none;">
         <h1 class="glow-text">Final Proposal Arc</h1>
         <p>Will you be my Player 2?</p>
-        <button id="yesBtn">YES</button>
-        <button id="noBtn">NO</button>
+        <div class="btn-group">
+            <button id="yesBtn" class="shinobi-btn">YES</button>
+            <button id="noBtn" class="shinobi-btn">NO</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
