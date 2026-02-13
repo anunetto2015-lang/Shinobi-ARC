@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shinobi Proposal Arc</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-aesthetic">
+    <div id="intro-screen" class="active-screen">
+        <h1 class="cinematic-text">SHINOBI PROPOSAL ARC</h1>
+        <button onclick="startGame()">UNSEAL THE SCROLL</button>
+    </div>
+
+    <div id="game-container" class="hidden">
+        <h2 id="game-title">Level 1: Chakra Charge</h2>
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui">
+            <div id="power-bar"><div id="power-fill"></div></div>
+        </div>
+    </div>
+
+    <div id="final-screen" class="hidden">
+        <h1 class="glow-text">Final Proposal Arc</h1>
+        <p>Will you be my Player 2?</p>
+        <button id="yesBtn">YES</button>
+        <button id="noBtn">NO</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
