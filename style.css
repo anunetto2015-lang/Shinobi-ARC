@@ -1,34 +1,53 @@
+
 :root {
-    --shinobi-purple: #6e00ff;
-    --demon-red: #ff003c;
-    --map-pink: #ff7eb9;
+    --purple: #6e00ff;
+    --red: #ff003c;
+    --pink: #ff7eb9;
+    --dark: #050505;
 }
 
-body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #050505; color: white; font-family: 'Courier New', monospace; }
-
-.screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100vh; position: absolute; }
+body { margin: 0; background: var(--dark); color: white; font-family: 'Courier New', monospace; overflow: hidden; user-select: none; }
+.screen { display: none; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: absolute; top: 0; left: 0; }
 .screen.active { display: flex; }
 
-.dark-aesthetic { background: radial-gradient(circle, #1a0033 0%, #050505 100%); }
+.dark-aesthetic { background: radial-gradient(circle, #1a0033 0%, #000 100%); }
 
-/* Map Grid Styles */
-.map-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 90%; max-width: 350px; }
-.grid-item {
-    border: 3px solid var(--map-pink); background: rgba(255, 126, 185, 0.1);
-    padding: 15px; cursor: pointer; text-align: center; transition: 0.3s;
+/* INTRO SEAL GAME */
+#seal-container { display: flex; gap: 20px; margin: 30px; }
+.seal-lock {
+    width: 60px; height: 60px; border: 2px solid var(--purple); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 30px;
+    cursor: pointer; animation: pulse 1.5s infinite; transition: 0.3s;
 }
-.grid-item.locked { opacity: 0.2; filter: grayscale(1); cursor: not-allowed; }
-.grid-item span { font-size: 2.5rem; }
-.grid-label { font-size: 0.7rem; color: var(--map-pink); font-weight: bold; margin-top: 5px; }
+.seal-lock:active { transform: scale(0.9); background: var(--purple); }
 
-/* Game Elements */
-canvas { background: rgba(255,255,255,0.05); border: 2px solid var(--shinobi-purple); width: 300px; height: 350px; }
-#power-bar { width: 250px; height: 10px; border: 1px solid var(--shinobi-purple); margin: 10px 0; border-radius: 5px; }
-#power-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--shinobi-purple), var(--demon-red)); }
+/* MAP GRID */
+.map-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 90%; max-width: 350px; }
+.grid-item { border: 2px solid var(--pink); background: rgba(255, 126, 185, 0.1); padding: 15px; cursor: pointer; transition: 0.3s; }
+.grid-item.locked { filter: grayscale(1); opacity: 0.3; pointer-events: none; }
+.grid-item span { font-size: 2rem; display: block; margin-bottom: 5px; }
 
-.shinobi-btn { background: #000; color: #fff; border: 2px solid var(--shinobi-purple); padding: 12px 24px; cursor: pointer; font-weight: bold; }
-.glow-text { color: var(--demon-red); text-shadow: 0 0 10px var(--demon-red); }
+/* GAME AREA */
+#game-area { width: 300px; height: 350px; border: 2px solid var(--purple); margin-bottom: 10px; position: relative; overflow: hidden; background: rgba(255,255,255,0.05); }
+canvas { width: 100%; height: 100%; }
 
-/* Sakura Storm */
-.sakura-storm { position: fixed; width: 100%; height: 100%; pointer-events: none; background: url('https://www.transparenttextures.com/patterns/dust.png'); opacity: 0.3; }
+/* MEMORY GAME STYLES */
+.memory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 10px; height: 100%; }
+.card { background: var(--purple); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border-radius: 5px; }
+.card.flipped { background: white; color: black; }
+.card.matched { background: var(--red); opacity: 0; pointer-events: none; transition: 0.5s; }
+
+/* FINAL SCREEN */
+.scroll-reveal { width: 85%; padding: 25px; border: 2px solid var(--purple); background: rgba(0,0,0,0.95); box-shadow: 0 0 25px var(--purple); z-index: 10; animation: fadeUp 2s ease-out; }
+.anime-paragraph { font-size: 0.95rem; line-height: 1.6; color: #ddd; text-align: justify; margin: 20px 0; font-style: italic; }
+.sakura-storm { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: url('https://www.transparenttextures.com/patterns/dust.png'); opacity: 0.4; animation: snow 10s linear infinite; }
+
+/* UI ELEMENTS */
+#power-bar { width: 80%; height: 8px; border: 1px solid var(--purple); margin: 10px auto; border-radius: 4px; }
+#power-fill { height: 100%; width: 0%; background: var(--red); transition: width 0.1s; }
+.shinobi-btn { background: black; color: white; border: 1px solid var(--purple); padding: 10px 20px; margin: 5px; cursor: pointer; letter-spacing: 2px; }
+
+@keyframes pulse { 0% { box-shadow: 0 0 5px var(--purple); } 50% { box-shadow: 0 0 20px var(--purple); } 100% { box-shadow: 0 0 5px var(--purple); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes snow { from { background-position: 0 0; } to { background-position: 100px 500px; } }
 
