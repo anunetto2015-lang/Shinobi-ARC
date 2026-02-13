@@ -1,86 +1,114 @@
-const audio = document.getElementById('bgm');
-const powerFill = document.getElementById('power-fill');
-const player = document.getElementById('player-sprite');
-const enemy = document.getElementById('enemy-sprite');
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let scrollsCollected = 0;
+let animationFrame;
 
-let level = 1;
-let score = 0;
+const missions = [
+    { id: 1, name: "Chakra Charge", icon: "🌀", instr: "Tap/Click screen repeatedly!", unlocked: true },
+    { id: 2, name: "Ramen Catch", icon: "🍜", instr: "Move mouse/finger to catch Ramen!", unlocked: false },
+    { id: 3, name: "Kunai Dodge", icon: "🗡️", instr: "Don't let the Kunai touch you!", unlocked: false },
+    { id: 4, name: "Shadow Clone", icon: "👥", instr: "Click only the REAL Naruto (🦊)!", unlocked: false },
+    { id: 5, name: "Protect Golibaje", icon: "🥟", instr: "Click the ninjas before they eat!", unlocked: false },
+    { id: 6, name: "Demon Duel", icon: "👺", instr: "Mash screen to overpower the Demon!", unlocked: false }
+];
 
-// High-quality anime music links
-const playlist = {
-    battle: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", 
-    romance: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-};
-
-const levels = {
-    1: { title: "1. Chakra Charge", p: "🦊", e: "🌀" },
-    2: { title: "2. Ramen Date Catch", p: "🍥", e: "🍜" },
-    3: { title: "3. Kunai Dodge", p: "🏃", e: "🗡️" },
-    4: { title: "4. Shadow Clone Clicker", p: "👥", e: "💨" },
-    5: { title: "5. Protect Golibaje", p: "🥟", e: "🥷" },
-    6: { title: "6. Demon Slayer Duel", p: "🎴", e: "👹" }
-};
-
-function startGame() {
+function enterMap() {
     document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('map-screen').style.display = 'block';
+    renderMap();
+}
+
+function renderMap() {
+    const grid = document.getElementById('mapGrid');
+    grid.innerHTML = '';
+    missions.forEach(m => {
+        const div = document.createElement('div');
+        div.className = `grid-item ${m.unlocked ? '' : 'locked'}`;
+        div.innerHTML = `<span>${m.icon}</span><br>${m.name}`;
+        if (m.unlocked) div.onclick = () => startMission(m);
+        grid.appendChild(div);
+    });
+}
+
+function startMission(m) {
+    document.getElementById('map-screen').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
-    audio.src = playlist.battle;
-    audio.play();
-    loadLevel(1);
+    document.getElementById('game-title').innerText = m.name;
+    document.getElementById('game-instruction').innerText = m.instr;
+    
+    cancelAnimationFrame(animationFrame);
+    canvas.width = 300; canvas.height = 400;
+    
+    if (m.id === 2) runRamenCatch();
+    else if (m.id === 3) runKunaiDodge();
+    else if (m.id === 5) runGolibajeDefense();
+    else runStandardTap(m.id);
 }
 
-function loadLevel(lv) {
-    level = lv;
-    score = 0;
-    powerFill.style.width = "0%";
-    document.getElementById('game-title').innerText = levels[lv].title;
-    player.innerText = levels[lv].p;
-    enemy.innerText = levels[lv].e;
-}
+// GAME 3: KUNAI DODGE LOGIC
+function runKunaiDodge() {
+    let playerX = 150;
+    let kunais = [];
+    let dodgeScore = 0;
 
-// Global click/tap listener
-window.addEventListener('mousedown', handleAction);
-window.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevents multi-tap zoom on phones
-    handleAction();
-});
+    canvas.onmousemove = (e) => playerX = e.offsetX;
+    canvas.ontouchmove = (e) => playerX = e.touches[0].clientX - canvas.offsetLeft;
 
-function handleAction() {
-    if (document.getElementById('game-container').style.display === 'block') {
-        score += 20; 
-        powerFill.style.width = score + "%";
+    function loop() {
+        ctx.clearRect(0,0,300,400);
+        ctx.fillText("🏃", playerX - 10, 380);
         
-        // Ninja Flash Effect
-        player.style.transform = "translateX(40px) scale(1.2)";
-        setTimeout(() => player.style.transform = "translateX(0) scale(1)", 80);
+        if(Math.random() < 0.05) kunais.push({x: Math.random()*300, y: 0});
+        
+        kunais.forEach((k, i) => {
+            k.y += 5;
+            ctx.fillText("🗡️", k.x, k.y);
+            if(k.y > 360 && Math.abs(k.x - playerX) < 20) {
+                alert("Hit! Restarting Mission...");
+                startMission(missions[2]);
+            }
+        });
+        
+        dodgeScore += 0.5;
+        document.getElementById('power-fill').style.width = dodgeScore + "%";
+        if(dodgeScore >= 100) completeMission();
+        else animationFrame = requestAnimationFrame(loop);
+    }
+    loop();
+}
 
-        if (score >= 100) {
-            if (level < 6) loadLevel(level + 1);
-            else showFinal();
-        }
+// STANDARD CLICKER FOR 1, 4, 6
+function runStandardTap(id) {
+    let p = 0;
+    canvas.onclick = () => {
+        p += 10;
+        document.getElementById('power-fill').style.width = p + "%";
+        if(p >= 100) completeMission();
+    }
+}
+
+function completeMission() {
+    cancelAnimationFrame(animationFrame);
+    alert("Scroll Collected! 📜");
+    scrollsCollected++;
+    if(scrollsCollected < 6) {
+        missions[scrollsCollected].unlocked = true;
+        document.getElementById('game-container').style.display = 'none';
+        document.getElementById('map-screen').style.display = 'block';
+        renderMap();
+    } else {
+        showFinal();
     }
 }
 
 function showFinal() {
     document.getElementById('game-container').style.display = 'none';
     document.getElementById('final-screen').style.display = 'block';
-    audio.src = playlist.romance;
-    audio.play();
     
     const noBtn = document.getElementById('noBtn');
-    noBtn.onmouseover = moveButton;
-    noBtn.ontouchstart = moveButton;
-}
-
-function moveButton() {
-    const noBtn = document.getElementById('noBtn');
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-    noBtn.style.position = 'fixed';
-    noBtn.style.left = x + 'px';
-    noBtn.style.top = y + 'px';
-}
-
-function celebrate() {
-    alert("YES! The Final Jutsu is Complete! 💍✨");
+    noBtn.onmouseover = () => {
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = Math.random()*80+'vw';
+        noBtn.style.top = Math.random()*80+'vh';
+    }
 }
