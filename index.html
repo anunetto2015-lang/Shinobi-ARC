@@ -9,28 +9,39 @@
 <body class="dark-aesthetic">
     <div id="intro-screen">
         <h1 class="cinematic-text">SHINOBI PROPOSAL ARC</h1>
-        <p class="subtitle">UNSEAL THE FINAL JUTSU</p>
-        <button class="shinobi-btn" onclick="startGame()">UNSEAL THE SCROLL</button>
+        <button class="shinobi-btn" onclick="enterMap()">UNSEAL THE SCROLL</button>
+    </div>
+
+    <div id="map-screen" style="display: none;">
+        <h2 class="map-title">SELECT YOUR MISSION</h2>
+        <div class="map-grid" id="mapGrid"></div>
+        <div class="inventory">
+            <p>Scrolls Collected: <span id="scrollCount">0</span>/6</p>
+        </div>
     </div>
 
     <div id="game-container" style="display: none;">
-        <h2 id="game-title">Level 1: Chakra Charge</h2>
-        <div id="stage">
-            <div id="player-sprite">🦊</div>
-            <div id="enemy-sprite">🌀</div>
-        </div>
+        <h2 id="game-title"></h2>
+        <canvas id="gameCanvas"></canvas>
         <div id="ui">
+            <p id="game-instruction"></p>
             <div id="power-bar"><div id="power-fill"></div></div>
-            <p class="instruction">Tap / Click to Fight!</p>
         </div>
     </div>
 
     <div id="final-screen" style="display: none;">
         <div class="sakura-storm"></div>
-        <h1 class="glow-text">Will you be my Player 2?</h1>
-        <div class="btn-group">
-            <button id="yesBtn" class="shinobi-btn" onclick="celebrate()">YES</button>
-            <button id="noBtn" class="shinobi-btn">NO</button>
+        <div class="scroll-reveal">
+            <h1>MISSION COMPLETE!</h1>
+            <p class="anime-paragraph">
+                By the power of the Six Paths, you have cleared every trial. Your resolve is unbreakable. 
+                In this world of shinobi, a comrade like you is rarer than a Forbidden Jutsu.
+            </p>
+            <h2 class="glow-text">Will you be my Player 2?</h2>
+            <div class="btn-group">
+                <button id="yesBtn" class="shinobi-btn" onclick="celebrate()">YES</button>
+                <button id="noBtn" class="shinobi-btn">NO</button>
+            </div>
         </div>
     </div>
 
